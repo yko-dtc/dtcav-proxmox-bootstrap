@@ -9,4 +9,4 @@ Automates repository setup, updates, and common Proxmox tweaks for company serve
 
 ## Usage
 ```bash
-bash -c "$(https://raw.githubusercontent.com/yko-dtc/dtcav-proxmox-bootstrap/refs/heads/main/post-pve-install.sh?token=GHSAT0AAAAAADXBIW5UKBE6W2S6VTJHY3OC2NPYGFQ)"
+bash -c "$(https://raw.githubusercontent.com/yko-dtc/dtcav-proxmox-bootstrap/refs/heads/main/post-pve-install.sh)"
