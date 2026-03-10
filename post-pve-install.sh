@@ -431,45 +431,11 @@ EOF
   msg_ok "Disabled subscription nag (Delete browser cache)"
   apt --reinstall install proxmox-widget-toolkit &>/dev/null || msg_error "Widget toolkit reinstall failed"
   if ! systemctl is-active --quiet pve-ha-lrm; then
-    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "HIGH AVAILABILITY" --menu "Enable high availability?" 10 58 2 \
-      "yes" " " \
-      "no" " " 3>&2 2>&1 1>&3)
-    case $CHOICE in
-    yes)
-      msg_info "Enabling high availability"
-      systemctl enable -q --now pve-ha-lrm
-      systemctl enable -q --now pve-ha-crm
-      systemctl enable -q --now corosync
-      msg_ok "Enabled high availability"
-      ;;
-    no) msg_error "Selected no to Enabling high availability" ;;
-    esac
+    msg_ok "High availability is not active — skipping (not enabling)"
   fi
 
   if systemctl is-active --quiet pve-ha-lrm; then
-    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "HIGH AVAILABILITY" --menu "If you plan to utilize a single node instead of a clustered environment, you can disable unnecessary high availability (HA) services, thus reclaiming system resources.\n\nIf HA becomes necessary at a later stage, the services can be re-enabled.\n\nDisable high availability?" 18 58 2 \
-      "yes" " " \
-      "no" " " 3>&2 2>&1 1>&3)
-    case $CHOICE in
-    yes)
-      msg_info "Disabling high availability"
-      systemctl disable -q --now pve-ha-lrm
-      systemctl disable -q --now pve-ha-crm
-      msg_ok "Disabled high availability"
-      CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "COROSYNC" --menu "Disable Corosync for a Proxmox VE Cluster?" 10 58 2 \
-        "yes" " " \
-        "no" " " 3>&2 2>&1 1>&3)
-      case $CHOICE in
-      yes)
-        msg_info "Disabling Corosync"
-        systemctl disable -q --now corosync
-        msg_ok "Disabled Corosync"
-        ;;
-      no) msg_error "Selected no to Disabling Corosync" ;;
-      esac
-      ;;
-    no) msg_error "Selected no to Disabling high availability" ;;
-    esac
+    msg_ok "High availability is active — skipping (not disabling)"
   fi
 
   CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "UPDATE" --menu "\nUpdate Proxmox VE now?" 11 58 2 \
